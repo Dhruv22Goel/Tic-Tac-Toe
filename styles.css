@@ -1,0 +1,173 @@
+*,*::after,*::before{
+    box-sizing:border-box;
+}
+
+/* declaring varibales */
+
+:root{
+    --cell-size:100px;
+    --mark-size:calc(var(--cell-size)*.9);
+}
+
+/* styling body */
+
+body{
+    margin:0;
+}
+
+/* sthling board */
+
+.board{
+    width:100vw;
+    height: 100vh;
+    display:grid;
+    justify-content: center;
+    align-content: center;
+    justify-items: center;
+    align-items: center;
+    grid-template-columns: repeat(3,auto);
+}
+
+/* styling cell */
+
+.cell{
+    height:var(--cell-size);
+    width:var(--cell-size);
+    border:1px solid black;
+    display:flex;
+    justify-content: center;
+    align-content: center;
+    justify-items: center;
+    align-items: center; 
+    position: relative;
+    cursor: pointer;
+}
+
+/* removing borders from cells */
+
+.cell:nth-child(1),
+.cell:nth-child(2),
+.cell:nth-child(3){
+    border-top:none;
+}
+.cell:nth-child(7),
+.cell:nth-child(8),
+.cell:nth-child(9){
+    border-bottom: none;
+}
+.cell:nth-child(3n+1){
+    border-left: none;
+}
+.cell:nth-child(3n+3){
+    border-right: none;
+}
+
+/* hover color */
+
+.board.o .cell:not(.x):not(.o):hover::before,
+.board.o .cell:not(.x):not(.o):hover::after,
+.board.x .cell:not(.x):not(.o):hover::before,
+.board.x .cell:not(.x):not(.o):hover::after{
+    background-color: lightgrey;
+}
+
+/* mark color */
+
+.cell.o::before,
+.cell.o::after,
+.cell.x::before,
+.cell.x::after{
+    background-color: black;
+}
+
+/* desiging "X" mark */
+
+.board.x .cell:not(.x):not(.o):hover::before,
+.board.x .cell:not(.x):not(.o):hover::after,
+.cell.x::before,
+.cell.x::after{
+    content: '';
+    position: absolute;
+    width: calc(var(--mark-size) * .15);
+    height: var(--mark-size);
+}
+.board.x .cell:not(.x):not(.o):hover::before,
+.cell.x::before{
+    transform: rotate(45deg);
+}
+.board.x .cell:not(.x):not(.o):hover::after,
+.cell.x::after{
+    transform: rotate(-45deg);
+}
+
+/* desiging "O" mark */
+
+.board.o .cell:not(.x):not(.o):hover::before,
+.board.o .cell:not(.x):not(.o):hover::after,
+.cell.o::before,
+.cell.o::after{
+    content: '';
+    position: absolute;
+    width: var(--mark-size);
+    height: var(--mark-size);
+    border-radius: 50%;
+}
+.board.o .cell:not(.x):not(.o):hover::before,
+.cell.o::before{
+    width:var(--mark-size);
+    height: var(--mark-size);
+}
+.board.o .cell:not(.x):not(.o):hover::after,
+.cell.o::after{
+    width: calc(var(--mark-size) * .7);
+    height: calc(var(--mark-size) *  .7);
+    background-color: white;
+}
+
+/* disabling cursor */
+
+.cell.x,
+.cell.o{
+    cursor: not-allowed;
+}
+
+/* designing winning-message */
+
+.winning-message{
+    display: none;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background-color: rgba(0,0,0,.9);
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 5rem;
+    flex-direction: column;
+}
+
+/* desiging winning-message button */
+
+.winning-message button{
+    font-size: 3rem;
+    background-color: white;
+    border: 1px solid black;
+    padding: .25rem .5rem;
+    cursor:pointer;
+}
+
+/* designing .winning-message button hover */
+
+.winning-message button:hover{
+    background-color: black;
+    border: 1px solid white;
+    color: white;
+}
+
+/* displaying winning message */
+
+.winning-message.show{
+    display: flex;
+}
